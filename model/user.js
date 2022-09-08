@@ -2,11 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 let userSchema = new Schema(
   {
-    username: {
+    firstname: {
       type: String,
       required: true,
     },
-    phonenumber: {
+    lastname: {
+      type: String,
+      required: true,
+    },
+    phone: {
       type: Number,
       required: true,
     },
@@ -14,14 +18,15 @@ let userSchema = new Schema(
       type: String,
       required: true,
     },
+    address: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
     },
-    confirm: {
-      type: String,
-      required: true,
-    },
+   
   },
 );
 module.exports = mongoose.model("userregister", userSchema);

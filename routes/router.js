@@ -13,11 +13,13 @@ router.post('/register', async(req,res) => {
     const securePassword = await bcrypt.hash(req.body.password, saltPassword);
 
     const signup = new userRegistration({
-        username: req.body.username,
-        phonenumber: req.body.phonenumber,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        phone: req.body.phone,
         email: req.body.email,
+        address: req.body.address,
         password: securePassword,
-        confirm: req.body.confirm
+      
 
     })
     signup.save()
@@ -28,7 +30,7 @@ router.post('/register', async(req,res) => {
         res.json(err)
     })
 })
-router.get('/login', async(req,res) =>{
+router.post('/login', async(req,res) =>{
     const {email, password} = req.body
     const users = await userRegistration.findOne({email});
 
