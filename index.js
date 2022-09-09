@@ -1,18 +1,38 @@
 const express = require("express");
 const app = express();
-const mogoose = require("mongoose");
+const mongoose = require("mongoose");
 const cors = require('cors');
-const routesUrl = require('./routes/router')
-const routesPro = require('./routes/product')
+const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
+const bodyParser = require('body-parser');
+const db = require('./config/db.config');
+const product = require("./model/product");
 
 app.use(express.json());
 app.use(cors());
-mogoose.connect(
-  "mongodb+srv://Hlalele:HlaleleMaroba@crud.ht6dtyo.mongodb.net/?retryWrites=true&w=majority"
-);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use('/app' , routesUrl)
-app.use('/app' , routesPro)
-app.listen(8000, () => {
-  console.log("Server Is Up");
-});
+app.get('/', (req,res) => {
+  res.send("Farmers API");
+})
+
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}.`);
+})
+
+// routes
+require('./routes/productRoutes')(app);
+(userRoutes)(app);
+
+mongoose
+  .connect(db.url)
+  .then(() => {
+    console.log("Connected to DB");
+  })
+  .catch((error) => {
+    console.log("Error Connectting To The Database");
+    console.error(error);
+  });
