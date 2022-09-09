@@ -31,8 +31,8 @@ exports.findAll = async(req,res) => {
 
 }
 
-exports.findByEmail = async(req,res) => {
-    products.find({}, (err,result) =>{
+exports.find = async(req,res) => {
+    products.findById({_id: req.params.id}, (err,result) =>{
         if(err){
             res.send(err)
         }
@@ -57,7 +57,7 @@ exports.update = async(req,res) => {
      await products.findByIdAndUpdate({_id: req.params.id}, {
          $set: req.body
      });
-     res.status(201).json("User Updated")
+     res.status(201).json("Product Updated")
     }
     catch(err){
      res.status(409).json({message: err.message})

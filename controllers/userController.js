@@ -72,6 +72,15 @@ exports.delete = async(req,res) => {
     res.status(409).json({message: err.message})
    }
 }
+exports.find = async(req,res) => {
+    user.find({email: req.params.email}, (err,result) =>{
+        if(err){
+            res.send(err)
+        }
+        res.send(result)
+    })
+
+}
 
 exports.update = async(req,res) => {
  

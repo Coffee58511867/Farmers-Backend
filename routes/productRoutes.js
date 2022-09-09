@@ -9,13 +9,13 @@ module.exports = app => {
     router.get("/readproducts", products.findAll);
 
     // Update a product
-    router.put('/update/:id', products.update)
+    router.post('/updateproduct/:id', products.update)
 
     // Delete a product
     router.delete("/deleteproducts/:id", products.delete);
 
-    // Find by email
-    router.get('/readproducts/:email', products.findByEmail);
+    // Find by id
+    router.get("/readproduct/:id", products.find);
 
     app.use('/api/v1/products', router);
 }

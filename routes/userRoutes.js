@@ -8,6 +8,8 @@ module.exports = app => {
     router.post("/login", users.login);
 
     router.get("/read", users.findAll);
+    
+    router.get("/read/:email", users.find);
 
     router.delete('/delete/:id', users.delete);
 
