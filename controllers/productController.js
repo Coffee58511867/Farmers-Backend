@@ -1,7 +1,36 @@
 const products = require('../model/product')
+const express = require("express");
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function(req,file,cb) {
+    cb(null, "./Images/");
+  },
+  filename: function(req,file, cb){
+   cb(null, file.originalname);
+  }
+})
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const upload = multer({storage : storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+})
+//const upload = multer({dest: 'Images/'})
+
+const type = upload.single('productimage')
 
 
-exports.create = async(req,res) => {
+exports.create = type ,async(req,res) => {
 
     const signup = new products({
         title: req.body.title,
@@ -10,7 +39,8 @@ exports.create = async(req,res) => {
         quantity: req.body.quantity,
         delivery: req.body.delivery,
         location: req.body.location,
-        email: req.body.email
+        email: req.body.email,
+        productimage : req.file.path
     })
     signup.save()
     .then(data =>{

@@ -29,6 +29,10 @@ let productSchema = new Schema(
     email: {
       type: String,
       required: true,
+    },
+    productimage: {
+      type: String,
+      required: true,
     }
   },
 );

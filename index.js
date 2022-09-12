@@ -6,19 +6,20 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const bodyParser = require('body-parser');
 const db = require('./config/db.config');
-const product = require("./model/product");
+const product = require("./routes/product");
 
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use("/app" ,product);
 
 app.get('/', (req,res) => {
   res.send("Farmers API");
 })
 
 
-const PORT = process.env.PORT || 2000;
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}.`);
 })
